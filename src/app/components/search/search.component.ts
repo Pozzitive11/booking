@@ -20,6 +20,10 @@ import { CommonModule } from '@angular/common';
 import { hotelRooms } from '../../DB';
 import { RoomCardComponent } from '../room-card/room-card.component';
 import { UtilsFunctions } from '../../utils/utils.functions';
+import { dateRangeValidator } from '../../validators/date-range.validator';
+import { BookingService } from '../../services/booking.service';
+import { SearchService } from '../../services/search.service';
+
 @Component({
   selector: 'app-search',
   imports: [
@@ -40,9 +44,11 @@ import { UtilsFunctions } from '../../utils/utils.functions';
 })
 export class SearchComponent implements OnInit {
   private fb = inject(FormBuilder);
+  protected bookingService = inject(BookingService);
+  protected searchService = inject(SearchService);
+
   searchForm: FormGroup;
-  minDate = signal<Date | null>(null);
-  filteredRooms = hotelRooms;
+  minDate = signal<Date>(new Date());
 
   get checkInDateControl(): FormControl {
     return this.searchForm.get('checkInDate') as FormControl;
@@ -56,73 +62,49 @@ export class SearchComponent implements OnInit {
   get peopleControl(): FormControl {
     return this.searchForm.get('people') as FormControl;
   }
-  get bookingTypeControl(): FormControl {
-    return this.searchForm.get('bookingType') as FormControl;
-  }
+  // get bookingTypeControl(): FormControl {
+  //   return this.searchForm.get('bookingType') as FormControl;
+  // }
 
   ngOnInit() {
     this.initializeForm();
-    this.minDate.set(new Date());
   }
 
   initializeForm() {
     this.searchForm = this.fb.group({
-      checkInDate: [null, [Validators.required, this.dateRangeValidator]],
-      checkOutDate: [null, [Validators.required, this.dateRangeValidator]],
+      checkInDate: [null, [Validators.required, dateRangeValidator]],
+      checkOutDate: [null, [Validators.required, dateRangeValidator]],
       rooms: [1, [Validators.required, Validators.min(1)]],
       people: [1, [Validators.required, Validators.min(1)]],
-      bookingType: ['self', Validators.required],
+      // bookingType: ['self', Validators.required],
     });
   }
 
-  increaseValue(controlName: string): void {
-    const currentValue = this.searchForm.get(controlName)?.value || 0;
-    this.searchForm.get(controlName)?.setValue(currentValue + 1);
+  increaseValue(controlName: string, event: Event): void {
+    event.preventDefault();
+    const control = this.searchForm.get(controlName);
+    const currentValue = control?.value || 0;
+    control?.setValue(currentValue + 1);
   }
 
-  decreaseValue(controlName: string): void {
-    const currentValue = this.searchForm.get(controlName)?.value || 0;
+  decreaseValue(controlName: string, event: Event): void {
+    event.preventDefault();
+    const control = this.searchForm.get(controlName);
+    const currentValue = control?.value || 0;
     if (currentValue > 1) {
-      this.searchForm.get(controlName)?.setValue(currentValue - 1);
+      control?.setValue(currentValue - 1);
     }
   }
-
   onSearch(): void {
     const { checkInDate, checkOutDate, rooms, people } = this.searchForm.value;
 
-    // Перетворюємо вибрані дати в локальний формат ISO
-    const checkIn = new Date(checkInDate);
-    const checkOut = new Date(checkOutDate);
-
-    // Генеруємо всі дати між checkIn і checkOut
-    const selectedDates: string[] = UtilsFunctions.getDatesInRange(
-      checkIn,
-      checkOut
-    );
-
-    // Фільтруємо номери за кількістю кімнат, гостей та доступними датами
-    this.filteredRooms = hotelRooms.filter((room) => {
-      const hasAvailability = selectedDates.every((date) =>
-        room.availableDates.includes(date)
+    if (checkInDate && checkOutDate) {
+      this.searchService.searchRooms(
+        new Date(checkInDate),
+        new Date(checkOutDate),
+        rooms,
+        people
       );
-
-      return room.maxGuests >= people && room.availability && hasAvailability;
-    });
-
-    console.log('Відфільтровані номери:', this.filteredRooms);
-  }
-
-  dateRangeValidator(control: AbstractControl): ValidationErrors | null {
-    const value = control.value;
-    if (!value) return null;
-
-    const today = new Date();
-    const maxDate = addDays(today, 30);
-
-    if (isBefore(value, today) || isBefore(maxDate, value)) {
-      return { dateRange: true };
     }
-
-    return null;
   }
 }

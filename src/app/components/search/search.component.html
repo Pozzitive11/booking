@@ -1,12 +1,24 @@
 <div class="container mx-auto p-4">
   <h1 class="text-2xl font-bold mb-6">Пошук номерів</h1>
-  <form [formGroup]="searchForm" (ngSubmit)="onSearch()" class="flex flex-col gap-4">
+  <form
+    [formGroup]="searchForm"
+    (ngSubmit)="onSearch()"
+    class="flex items-center gap-4 mb-10"
+  >
     <!-- Дати -->
     <div class="flex items-center gap-4">
       <mat-form-field appearance="fill" class="flex-1">
         <mat-label>Дата заїзду</mat-label>
-        <input matInput [matDatepicker]="checkInPicker" [formControl]="checkInDateControl" [min]="minDate()" />
-        <mat-datepicker-toggle matIconSuffix [for]="checkInPicker"></mat-datepicker-toggle>
+        <input
+          matInput
+          [matDatepicker]="checkInPicker"
+          [formControl]="checkInDateControl"
+          [min]="minDate()"
+        />
+        <mat-datepicker-toggle
+          matIconSuffix
+          [for]="checkInPicker"
+        ></mat-datepicker-toggle>
         <mat-datepicker #checkInPicker></mat-datepicker>
         <mat-error *ngIf="checkInDateControl.hasError('required')">
           Дата заїзду обов'язкова.
@@ -18,8 +30,16 @@
 
       <mat-form-field appearance="fill" class="flex-1">
         <mat-label>Дата виїзду</mat-label>
-        <input matInput [matDatepicker]="checkOutPicker" [formControl]="checkOutDateControl"  [min]="checkInDateControl.value || minDate" />
-        <mat-datepicker-toggle matIconSuffix [for]="checkOutPicker"></mat-datepicker-toggle>
+        <input
+          matInput
+          [matDatepicker]="checkOutPicker"
+          [formControl]="checkOutDateControl"
+          [min]="checkInDateControl.value || minDate"
+        />
+        <mat-datepicker-toggle
+          matIconSuffix
+          [for]="checkOutPicker"
+        ></mat-datepicker-toggle>
         <mat-datepicker #checkOutPicker></mat-datepicker>
         <mat-error *ngIf="checkOutDateControl.hasError('required')">
           Дата виїзду обов'язкова.
@@ -33,11 +53,22 @@
     <!-- Кількість номерів -->
     <div class="flex items-center gap-4">
       <label class="block text-gray-700">Кількість номерів:</label>
-      <button mat-icon-button (click)="decreaseValue('rooms')">
+      <button
+        mat-icon-button
+        (click)="decreaseValue('rooms', $event)"
+        [disabled]="roomsControl.value === 1"
+      >
         <mat-icon>remove</mat-icon>
       </button>
-      <input matInput type="number" [formControl]="roomsControl" readonly class="w-16 text-center" />
-      <button mat-icon-button (click)="increaseValue('rooms')">
+
+      <input
+        matInput
+        type="number"
+        [formControl]="roomsControl"
+        readonly
+        class="w-16 text-center"
+      />
+      <button mat-icon-button (click)="increaseValue('rooms', $event)">
         <mat-icon>add</mat-icon>
       </button>
     </div>
@@ -45,29 +76,49 @@
     <!-- Кількість людей -->
     <div class="flex items-center gap-4">
       <label class="block text-gray-700">Кількість людей:</label>
-      <button mat-icon-button (click)="decreaseValue('people')">
+      <button
+        mat-icon-button
+        (click)="decreaseValue('people', $event)"
+        [disabled]="peopleControl.value === 1"
+      >
         <mat-icon>remove</mat-icon>
       </button>
-      <input matInput type="number" [formControl]="peopleControl" readonly class="w-16 text-center" />
-      <button mat-icon-button (click)="increaseValue('people')">
+      <input
+        matInput
+        type="number"
+        [formControl]="peopleControl"
+        readonly
+        class="w-16 text-center"
+      />
+      <button
+        mat-icon-button
+        (click)="increaseValue('people', $event)"
+        class="flex justify-center align-center"
+      >
         <mat-icon>add</mat-icon>
       </button>
     </div>
 
     <!-- Радіо-кнопки -->
-    <div>
+    <!-- <div>
       <label class="block text-gray-700 mb-2">Тип бронювання:</label>
       <mat-radio-group [formControl]="bookingTypeControl">
-        <mat-radio-button value="self" class="mr-4">Бронюю самостійно</mat-radio-button>
+        <mat-radio-button value="self" class="mr-4"
+          >Бронюю самостійно</mat-radio-button
+        >
         <mat-radio-button value="agency">Через турагентство</mat-radio-button>
       </mat-radio-group>
-    </div>
+    </div> -->
 
     <!-- Кнопка пошуку -->
-    <button mat-raised-button color="primary" [disabled]="searchForm.invalid">Пошук</button>
+    <button
+      mat-raised-button
+      color="primary"
+      type="submit"
+      [disabled]="searchForm.invalid"
+    >
+      Пошук
+    </button>
   </form>
-   <!-- Відображення результатів -->
-   <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-6">
-    <app-room-card *ngFor="let room of filteredRooms" [room]="room"></app-room-card>
-  </div>
+
 </div>
