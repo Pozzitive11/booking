@@ -21,4 +21,16 @@ export class UtilsFunctions {
 
     return dates;
   }
+
+  static formatDateToUkrainian(dateString: string): string {
+    const date = new Date(dateString);
+    const formatter = new Intl.DateTimeFormat('uk-UA', {
+      weekday: 'short', // скорочений день тижня (вт, ср, пт)
+      day: '2-digit', // двозначний день (01, 26)
+      month: 'short', // скорочений місяць (лист., гру.)
+      year: 'numeric', // рік
+    });
+
+    return formatter.format(date); // Форматуємо дату
+  }
 }

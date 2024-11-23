@@ -1,0 +1,80 @@
+<div class="space-y-6">
+  <!-- Room Image Section -->
+  <section>
+    <img
+      [src]="'assets/images/' + room().images[0]"
+      alt="Room Image"
+      class="rounded-lg shadow w-full object-cover"
+    />
+  </section>
+
+  <div class="border rounded-lg shadow p-4 bg-white">
+    <!-- Room Name -->
+    <h2 class="text-lg font-bold text-gray-900">{{ room().name }}</h2>
+
+    <!-- Address -->
+    <p class="text-sm text-gray-600 mb-2">
+      {{ room().address }}
+    </p>
+
+    <!-- Review Score -->
+    <div class="flex items-center space-x-2 mb-2">
+      <div class="bg-blue-500 text-white px-2 py-1 rounded text-sm font-bold">
+        {{ room().rating }}
+      </div>
+      <span class="text-gray-900 font-semibold">{{
+        roomDetailsService.getRatingDescription(room().rating)
+      }}</span>
+      <span class="text-sm text-gray-600"
+        >· {{ room().reviews.length }} відгуки</span
+      >
+    </div>
+
+    <!-- Amenities -->
+    <div class="flex items-center space-x-4 text-sm text-gray-700">
+      <span>Безкоштовний Wi-Fi</span>
+      <span>Трансфер з/до аеропорту</span>
+    </div>
+  </div>
+
+  <!-- Booking Summary Section -->
+  <section class="mt-6 border rounded-lg shadow p-4 bg-white">
+    <h2 class="text-lg font-semibold mb-4">Інформація про ваше бронювання</h2>
+
+    <!-- Check-in and Check-out Information -->
+    <div class="grid grid-cols-2 gap-4 text-sm text-gray-700">
+      <div>
+        <div class="font-semibold">Реєстрація заїзду</div>
+        <div>{{dates().checkInDate}}</div>
+      </div>
+      <div>
+        <div class="font-semibold">Реєстрація виїзду</div>
+        <div>{{dates().checkOutDate}}</div>
+      </div>
+    </div>
+
+    <!-- Stay Duration -->
+    <div class="mt-4">
+      <div class="text-sm text-gray-700">
+        Загальний термін перебування: <span class="font-semibold">3 ночі</span>
+      </div>
+    </div>
+
+    <!-- Room and Guests -->
+    <div class="mt-4 border-t pt-4 text-sm text-gray-700">
+      <div>
+        Ви вибрали: <span class="font-semibold">1 номер для 2 дорослих</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Total Price Section -->
+  <section class="mt-6 bg-blue-50 border border-blue-500 rounded-lg p-4 shadow">
+    <div class="text-lg font-semibold text-blue-800">
+      Кінцева ціна: ₴{{ room().pricePerNight * daysCount() }}
+    </div>
+    <div class="text-sm text-gray-600">
+      (Розраховано на основі вибраних {{ daysCount() }} ночей)
+    </div>
+  </section>
+</div>

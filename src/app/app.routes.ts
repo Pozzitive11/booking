@@ -10,4 +10,11 @@ export const routes: Routes = [
 
     pathMatch: 'full',
   },
+  {
+    path: 'book-room/:roomId',
+    loadComponent: () =>
+      import('./pages/book-room-page/book-room-page.component').then(
+        (m) => m.BookRoomPageComponent
+      ),
+  },
 ];

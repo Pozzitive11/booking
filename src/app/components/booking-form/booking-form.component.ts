@@ -1,20 +1,21 @@
-import { Component, input } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { Component, EventEmitter, output, Output } from '@angular/core';
 import {
   ReactiveFormsModule,
   FormGroup,
   FormBuilder,
   Validators,
 } from '@angular/forms';
-import { MatRadioModule } from '@angular/material/radio';
-import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatNativeDateModule } from '@angular/material/core';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
-import { CommonModule } from '@angular/common';
+import { MatInputModule } from '@angular/material/input';
+import { MatRadioModule } from '@angular/material/radio';
+
 @Component({
-  selector: 'app-book-room',
+  selector: 'app-booking-form',
   imports: [
     ReactiveFormsModule,
     MatRadioModule,
@@ -26,11 +27,13 @@ import { CommonModule } from '@angular/common';
     MatIconModule,
     CommonModule,
   ],
-  templateUrl: './book-room.component.html',
-  styleUrl: './book-room.component.css',
+  templateUrl: './booking-form.component.html',
+  styleUrl: './booking-form.component.css',
   standalone: true,
 })
-export class BookRoomComponent {
+export class BookingFormComponent {
+  formSubmit = output<FormGroup>();
+
   bookingForm: FormGroup;
 
   constructor(private fb: FormBuilder) {
@@ -38,15 +41,14 @@ export class BookRoomComponent {
       fullName: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
       age: [null, [Validators.required, Validators.min(18)]],
-      phone: ['', Validators.required, Validators.minLength(10)],
+      phone: ['', Validators.required],
       notes: [''],
     });
   }
 
-  onSubmit(): void {
+  submit(): void {
     if (this.bookingForm.valid) {
-      console.log('Booking Confirmation:', this.bookingForm.value);
-      alert('Бронювання підтверджено!');
+      this.formSubmit.emit(this.bookingForm);
     }
   }
 }

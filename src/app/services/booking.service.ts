@@ -23,4 +23,8 @@ export class BookingService {
 
     this._filteredRooms.set(filtered);
   }
+
+  getRoomById(id: number): Room {
+    return this._hotelRooms().find((room) => room.id === id);
+  }
 }

@@ -10,4 +10,5 @@ export interface Room {
   rating: number;
   reviews: { user: string; comment: string; rating: number }[];
   availableDates: string[];
+  address: string;
 }

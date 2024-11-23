@@ -10,10 +10,12 @@ export class SearchService {
 
   private _selectedDates = signal<string[]>([]);
   selectedDates = computed(() => this._selectedDates());
+  daysCount = computed(() => this.selectedDates().length);
 
   updateSelectedDates(checkIn: Date, checkOut: Date): void {
     const selectedDates = UtilsFunctions.getDatesInRange(checkIn, checkOut);
     this._selectedDates.set(selectedDates); // Update signal
+    console.log('Selected dates:', this.selectedDates());
   }
 
   searchRooms(

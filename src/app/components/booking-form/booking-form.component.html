@@ -1,7 +1,6 @@
-<div class=" mx-auto max-w-2xl p-6 bg-white shadow rounded-lg max-w-[500]">
+<div>
   <h1 class="text-2xl font-bold mb-6 text-center">Підтвердження бронювання</h1>
-  <form [formGroup]="bookingForm" (ngSubmit)="onSubmit()" class="space-y-4">
-    <!-- ПІБ -->
+  <form [formGroup]="bookingForm" (ngSubmit)="submit()" class="space-y-4">
     <mat-form-field appearance="fill" class="w-full">
       <mat-label>ПІБ</mat-label>
       <input matInput formControlName="fullName" placeholder="Введіть ваше повне ім'я" />
@@ -10,7 +9,6 @@
       </mat-error>
     </mat-form-field>
 
-    <!-- Ел пошта -->
     <mat-form-field appearance="fill" class="w-full">
       <mat-label>Ел. пошта</mat-label>
       <input matInput formControlName="email" placeholder="Введіть вашу електронну пошту" />
@@ -22,7 +20,6 @@
       </mat-error>
     </mat-form-field>
 
-    <!-- Вік -->
     <mat-form-field appearance="fill" class="w-full">
       <mat-label>Вік</mat-label>
       <input matInput type="number" formControlName="age" placeholder="Введіть ваш вік" />
@@ -34,31 +31,19 @@
       </mat-error>
     </mat-form-field>
 
-    <!-- Номер телефону -->
     <mat-form-field appearance="fill" class="w-full">
       <mat-label>Номер телефону</mat-label>
-      <input
-        matInput
-        formControlName="phone"
-        placeholder="Введіть ваш номер телефону"
-      />
+      <input matInput formControlName="phone" placeholder="Введіть ваш номер телефону" />
       <mat-error *ngIf="bookingForm.get('phone')?.hasError('required')">
         Номер телефону є обов'язковим.
       </mat-error>
     </mat-form-field>
 
-    <!-- Ваші побажання -->
     <mat-form-field appearance="fill" class="w-full">
       <mat-label>Ваші побажання</mat-label>
-      <textarea
-        matInput
-        formControlName="notes"
-        placeholder="Напишіть ваші побажання"
-        rows="4"
-      ></textarea>
+      <textarea matInput formControlName="notes" placeholder="Напишіть ваші побажання" rows="4"></textarea>
     </mat-form-field>
 
-    <!-- Submit Button -->
     <button mat-raised-button color="primary" [disabled]="bookingForm.invalid" class="w-full">
       Підтвердити бронювання
     </button>

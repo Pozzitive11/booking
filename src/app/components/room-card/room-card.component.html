@@ -3,24 +3,24 @@
   <div class="relative">
     <img
       [src]="'assets/images/room1.jpg'"
-      alt="{{ room.name }}"
+      alt="{{ room().name }}"
       class="w-full h-64 object-cover rounded-lg"
     />
     <div
-      *ngIf="!room.availability"
+      *ngIf="!room().availability"
       class="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center rounded-lg text-white text-xl font-bold"
     >
       Недоступно
     </div>
   </div>
 
-  <h2 class="text-xl font-bold mt-4 text-gray-800">{{ room.name }}</h2>
+  <h2 class="text-xl font-bold mt-4 text-gray-800">{{ room().name }}</h2>
 
-  <p class="text-gray-600 text-sm mt-2">{{ room.description }}</p>
+  <p class="text-gray-600 text-sm mt-2">{{ room().description }}</p>
 
   <div class="mt-4 flex items-center">
     <span class="text-green-600 font-bold text-xl"
-      >₴{{ room.pricePerNight }}</span
+      >₴{{ room().pricePerNight }}</span
     >
     <span class="text-gray-500 text-sm ml-2">/ ніч</span>
   </div>
@@ -28,14 +28,14 @@
   <div class="text-sm text-gray-700 mt-2 flex items-center gap-2">
     <mat-icon color="primary">group</mat-icon>
     <span
-      >Максимальна кількість гостей: <b>{{ room.maxGuests }}</b></span
+      >Максимальна кількість гостей: <b>{{ room().maxGuests }}</b></span
     >
   </div>
 
   <div class="text-sm text-gray-700 mt-2">
     <span class="font-semibold">Зручності:</span>
     <span
-      *ngFor="let amenity of room.amenities; let last = last"
+      *ngFor="let amenity of room().amenities; let last = last"
       class="text-gray-600"
     >
       {{ amenity }}<span *ngIf="!last">,</span>
@@ -45,12 +45,12 @@
   <div class="mt-6">
     <button
       mat-raised-button
-      [ngStyle]="{ 'background-color': room.availability ? 'primary' : 'warn' }"
-      [disabled]="!room.availability"
+      [ngStyle]="{ 'background-color': room().availability ? 'primary' : 'warn' }"
+      [disabled]="!room().availability"
       class="w-full"
-      (click)="openDialog('0ms', '0ms')"
+      (click)="rentRoom()"
     >
-      {{ room.availability ? "Забронювати" : "Недоступно" }}
+      {{ room().availability ? "Забронювати" : "Недоступно" }}
     </button>
   </div>
 </div>
