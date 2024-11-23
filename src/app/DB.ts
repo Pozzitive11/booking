@@ -7,7 +7,7 @@ export const hotelRooms = [
     pricePerNight: 1200,
     maxGuests: 2,
     amenities: ['Wi-Fi', 'Телевізор', 'Кондиціонер', 'Мінібар'],
-    images: ['room1.jpg'],
+    image: 'room1.jpg',
     availability: true,
     rating: 4.5,
     reviews: [
@@ -24,7 +24,7 @@ export const hotelRooms = [
     pricePerNight: 2500,
     maxGuests: 4,
     amenities: ['Wi-Fi', 'Телевізор', 'Балкон', 'Джакузі', 'Кондиціонер'],
-    images: ['room2.jpg'],
+    image: 'room1.jpg',
     availability: true,
     rating: 4.8,
     reviews: [
@@ -41,7 +41,7 @@ export const hotelRooms = [
     pricePerNight: 700,
     maxGuests: 1,
     amenities: ['Wi-Fi', 'Телевізор'],
-    images: ['room3.jpg'],
+    image: 'room1.jpg',
     availability: true,
     rating: 4.0,
     reviews: [
@@ -59,7 +59,7 @@ export const hotelRooms = [
     pricePerNight: 3000,
     maxGuests: 5,
     amenities: ['Wi-Fi', 'Дитяче ліжечко', 'Телевізор', 'Кондиціонер', 'Кухня'],
-    images: ['room4.jpg'],
+    image: 'room1.jpg',
     availability: true,
     rating: 4.6,
     reviews: [
@@ -76,7 +76,7 @@ export const hotelRooms = [
     pricePerNight: 5000,
     maxGuests: 3,
     amenities: ['Wi-Fi', 'Балкон', 'Джакузі', 'Телевізор', 'Сейф'],
-    images: ['room5.jpg'],
+    image: 'room1.jpg',
     availability: false,
     rating: 4.9,
     reviews: [
@@ -97,7 +97,7 @@ export const hotelRooms = [
     pricePerNight: 1100,
     maxGuests: 2,
     amenities: ['Wi-Fi', 'Телевізор', 'Кондиціонер'],
-    images: ['room6.jpg'],
+    image: 'room1.jpg',
     availability: true,
     rating: 4.2,
     reviews: [
@@ -114,7 +114,7 @@ export const hotelRooms = [
     pricePerNight: 2000,
     maxGuests: 2,
     amenities: ['Wi-Fi', 'Телевізор', 'Балкон', 'Кухня'],
-    images: ['room7.jpg'],
+    image: 'room1.jpg',
     availability: true,
     rating: 4.7,
     reviews: [
@@ -131,7 +131,7 @@ export const hotelRooms = [
     pricePerNight: 1800,
     maxGuests: 3,
     amenities: ['Wi-Fi', 'Телевізор', 'Кондиціонер', 'Робочий стіл'],
-    images: ['room8.jpg'],
+    image: 'room1.jpg',
     availability: true,
     rating: 4.4,
     reviews: [
@@ -149,7 +149,7 @@ export const hotelRooms = [
     pricePerNight: 4000,
     maxGuests: 2,
     amenities: ['Wi-Fi', 'Балкон', 'Джакузі', 'Шампанське'],
-    images: ['room9.jpg'],
+    image: 'room1.jpg',
     availability: false,
     rating: 4.9,
     reviews: [
@@ -166,7 +166,7 @@ export const hotelRooms = [
     pricePerNight: 10000,
     maxGuests: 8,
     amenities: ['Wi-Fi', 'Кухня', 'Басейн', 'Парковка'],
-    images: ['room10.jpg'],
+    image: 'room1.jpg',
     availability: true,
     rating: 5.0,
     reviews: [

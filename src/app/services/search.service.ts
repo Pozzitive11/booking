@@ -8,14 +8,23 @@ import { UtilsFunctions } from '../utils/utils.functions';
 export class SearchService {
   private bookingService = inject(BookingService);
 
-  private _selectedDates = signal<string[]>([]);
-  selectedDates = computed(() => this._selectedDates());
-  daysCount = computed(() => this.selectedDates().length);
+  private _selectedDatesRange = signal<string[]>([]);
+  selectedDatesRange = computed(() => this._selectedDatesRange());
+  selectedCheckInDate = computed(() => this.selectedDatesRange()[0]);
+  selectedCheckOutDate = computed(
+    () => this.selectedDatesRange()[this.selectedDatesRange().length - 1]
+  );
+  selectedDatesRangeCount = computed(() => this.selectedDatesRange().length);
+
+  private _amountOfPeople = signal<number>(1);
+  amountOfPeople = computed(() => this._amountOfPeople());
 
   updateSelectedDates(checkIn: Date, checkOut: Date): void {
-    const selectedDates = UtilsFunctions.getDatesInRange(checkIn, checkOut);
-    this._selectedDates.set(selectedDates); // Update signal
-    console.log('Selected dates:', this.selectedDates());
+    const selectedDatesRange = UtilsFunctions.getDatesInRange(
+      checkIn,
+      checkOut
+    );
+    this._selectedDatesRange.set(selectedDatesRange);
   }
 
   searchRooms(
@@ -25,6 +34,7 @@ export class SearchService {
     people: number
   ): void {
     this.updateSelectedDates(checkIn, checkOut);
-    this.bookingService.filterRooms(this.selectedDates(), rooms, people);
+    this._amountOfPeople.set(people);
+    this.bookingService.filterRooms(this.selectedDatesRange(), rooms, people);
   }
 }

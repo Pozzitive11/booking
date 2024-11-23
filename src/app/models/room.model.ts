@@ -5,7 +5,7 @@ export interface Room {
   pricePerNight: number;
   maxGuests: number;
   amenities: string[];
-  images: string[];
+  image: string;
   availability: boolean;
   rating: number;
   reviews: { user: string; comment: string; rating: number }[];

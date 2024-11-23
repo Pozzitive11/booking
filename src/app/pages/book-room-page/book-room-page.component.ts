@@ -1,11 +1,4 @@
-import {
-  Component,
-  computed,
-  inject,
-  input,
-  OnInit,
-  signal,
-} from '@angular/core';
+import { Component, computed, inject, input, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 
 import { CommonModule } from '@angular/common';
@@ -23,8 +16,13 @@ import { SearchService } from '../../services/search.service';
 })
 export class BookRoomPageComponent {
   private bookingService = inject(BookingService);
-  protected searchService = inject(SearchService);
+  // protected searchService = inject(SearchService);
   roomId = input.required<number>();
+  checkInDate = input.required<string>();
+  checkOutDate = input.required<string>();
+  amountOfPeople = input.required<number>();
+  selectedDatesRangeCount = input.required<number>();
+
   bookingForm: FormGroup;
   room = computed<Room>(() => this.bookingService.getRoomById(+this.roomId()));
 

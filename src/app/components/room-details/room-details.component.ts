@@ -18,18 +18,18 @@ export class RoomDetailsComponent {
   protected searchService = inject(SearchService);
 
   room = input.required<Room>();
-  dates = computed(() => {
-    return {
-      checkInDate: UtilsFunctions.formatDateToUkrainian(
-        this.searchService.selectedDates()[0]
-      ),
-      checkOutDate: UtilsFunctions.formatDateToUkrainian(
-        this.searchService.selectedDates()[
-          this.searchService.selectedDates().length - 1
-        ]
-      ),
-    };
+  daysCount = input.required<number>();
+  checkInDate = input.required<string>();
+  checkOutDate = input.required<string>();
+  amountOfPeople = input.required<number>();
+
+  formattedCheckInDate = computed(() => {
+    return UtilsFunctions.formatDateToUkrainian(this.checkInDate());
   });
 
-  daysCount = input.required<number>();
+  formattedCheckOutDate = computed(() => {
+    return UtilsFunctions.formatDateToUkrainian(this.checkOutDate());
+  });
+
+  totalPrice = computed(() => this.room().pricePerNight * this.daysCount());
 }

@@ -2,7 +2,7 @@
   <!-- Room Image Section -->
   <section>
     <img
-      [src]="'assets/images/' + room().images[0]"
+      [src]="'assets/images/' + room().image"
       alt="Room Image"
       class="rounded-lg shadow w-full object-cover"
     />
@@ -45,25 +45,25 @@
     <div class="grid grid-cols-2 gap-4 text-sm text-gray-700">
       <div>
         <div class="font-semibold">Реєстрація заїзду</div>
-        <div>{{dates().checkInDate}}</div>
+        <div>{{ formattedCheckInDate() }}</div>
       </div>
       <div>
         <div class="font-semibold">Реєстрація виїзду</div>
-        <div>{{dates().checkOutDate}}</div>
+        <div>{{ formattedCheckOutDate() }}</div>
       </div>
     </div>
 
     <!-- Stay Duration -->
     <div class="mt-4">
       <div class="text-sm text-gray-700">
-        Загальний термін перебування: <span class="font-semibold">3 ночі</span>
+        Загальний термін перебування: <span class="font-semibold">{{daysCount()}} ночей</span>
       </div>
     </div>
 
     <!-- Room and Guests -->
     <div class="mt-4 border-t pt-4 text-sm text-gray-700">
       <div>
-        Ви вибрали: <span class="font-semibold">1 номер для 2 дорослих</span>
+        Ви вибрали: <span class="font-semibold">номер для 2 людей</span>
       </div>
     </div>
   </section>
@@ -71,7 +71,7 @@
   <!-- Total Price Section -->
   <section class="mt-6 bg-blue-50 border border-blue-500 rounded-lg p-4 shadow">
     <div class="text-lg font-semibold text-blue-800">
-      Кінцева ціна: ₴{{ room().pricePerNight * daysCount() }}
+      Кінцева ціна: ₴{{ totalPrice() }}
     </div>
     <div class="text-sm text-gray-600">
       (Розраховано на основі вибраних {{ daysCount() }} ночей)

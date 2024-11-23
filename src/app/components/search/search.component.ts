@@ -4,8 +4,6 @@ import {
   FormGroup,
   FormBuilder,
   Validators,
-  AbstractControl,
-  ValidationErrors,
   FormControl,
 } from '@angular/forms';
 import { MatRadioModule } from '@angular/material/radio';
@@ -15,11 +13,8 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatIconModule } from '@angular/material/icon';
-import { addDays, isBefore } from 'date-fns';
 import { CommonModule } from '@angular/common';
-import { hotelRooms } from '../../DB';
 import { RoomCardComponent } from '../room-card/room-card.component';
-import { UtilsFunctions } from '../../utils/utils.functions';
 import { dateRangeValidator } from '../../validators/date-range.validator';
 import { BookingService } from '../../services/booking.service';
 import { SearchService } from '../../services/search.service';

@@ -6,7 +6,10 @@
 
   <app-room-details
     [room]="room()"
-    [daysCount]="searchService.daysCount()"
+    [daysCount]="selectedDatesRangeCount()"
+    [checkInDate]="checkInDate()"
+    [checkOutDate]="checkOutDate()"
+    [amountOfPeople]="amountOfPeople()"
   ></app-room-details>
   }
 
