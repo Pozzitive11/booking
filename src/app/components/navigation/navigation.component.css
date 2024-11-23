@@ -1,0 +1,17 @@
+nav {
+  background-color: #1e40af; /* Темно-синій */
+  padding: 1rem;
+}
+
+a {
+  color: white;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+a.router-link-active {
+  text-decoration: underline;
+}

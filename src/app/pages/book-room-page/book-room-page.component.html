@@ -1,18 +1,27 @@
-<div
-  class="grid grid-cols-1 md:grid-cols-2 gap-6 p-6 max-w-6xl mx-auto bg-white shadow-lg rounded-lg"
->
-  <!-- Left Section: Room Details -->
-  @if(room()){
+<div class="p-10">
+  <div class="p-6 max-w-6xl mx-auto bg-white shadow-lg rounded-lg">
+    <!-- Back to Home Button -->
+    <div class="mb-6">
+      <button mat-flat-button routerLink="/" color="primary">
+        Повернутись на головну сторінку
+      </button>
+    </div>
 
-  <app-room-details
-    [room]="room()"
-    [daysCount]="selectedDatesRangeCount()"
-    [checkInDate]="checkInDate()"
-    [checkOutDate]="checkOutDate()"
-    [amountOfPeople]="amountOfPeople()"
-  ></app-room-details>
-  }
+    <!-- Main Content -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <!-- Left Section: Room Details -->
+      @if(room()) {
+      <app-room-details
+        [room]="room()"
+        [daysCount]="selectedDatesRangeCount()"
+        [checkInDate]="checkInDate()"
+        [checkOutDate]="checkOutDate()"
+        [amountOfPeople]="amountOfPeople()"
+      ></app-room-details>
+      }
 
-  <!-- Right Section: Booking Form -->
-  <app-booking-form (formSubmit)="onSubmit($event)"></app-booking-form>
+      <!-- Right Section: Booking Form -->
+      <app-booking-form (formSubmit)="onSubmit($event)"></app-booking-form>
+    </div>
+  </div>
 </div>

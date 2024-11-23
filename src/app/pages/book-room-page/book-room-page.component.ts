@@ -6,10 +6,17 @@ import { Room } from '../../models/room.model';
 import { BookingService } from '../../services/booking.service';
 import { BookingFormComponent } from '../../components/booking-form/booking-form.component';
 import { RoomDetailsComponent } from '../../components/room-details/room-details.component';
-import { SearchService } from '../../services/search.service';
+import { RouterModule } from '@angular/router';
+import { MatButtonModule } from '@angular/material/button';
 @Component({
   selector: 'app-book-room-page',
-  imports: [CommonModule, BookingFormComponent, RoomDetailsComponent],
+  imports: [
+    CommonModule,
+    BookingFormComponent,
+    RoomDetailsComponent,
+    RouterModule,
+    MatButtonModule,
+  ],
   templateUrl: './book-room-page.component.html',
   styleUrl: './book-room-page.component.css',
   standalone: true,

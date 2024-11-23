@@ -27,14 +27,9 @@ export class SearchService {
     this._selectedDatesRange.set(selectedDatesRange);
   }
 
-  searchRooms(
-    checkIn: Date,
-    checkOut: Date,
-    rooms: number,
-    people: number
-  ): void {
+  searchRooms(checkIn: Date, checkOut: Date, people: number): void {
     this.updateSelectedDates(checkIn, checkOut);
     this._amountOfPeople.set(people);
-    this.bookingService.filterRooms(this.selectedDatesRange(), rooms, people);
+    this.bookingService.filterRooms(this.selectedDatesRange(), people);
   }
 }

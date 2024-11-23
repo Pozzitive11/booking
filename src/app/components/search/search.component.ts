@@ -51,9 +51,9 @@ export class SearchComponent implements OnInit {
   get checkOutDateControl(): FormControl {
     return this.searchForm.get('checkOutDate') as FormControl;
   }
-  get roomsControl(): FormControl {
-    return this.searchForm.get('rooms') as FormControl;
-  }
+  // get roomsControl(): FormControl {
+  //   return this.searchForm.get('rooms') as FormControl;
+  // }
   get peopleControl(): FormControl {
     return this.searchForm.get('people') as FormControl;
   }
@@ -74,7 +74,7 @@ export class SearchComponent implements OnInit {
     this.searchForm = this.fb.group({
       checkInDate: [today, [Validators.required, dateRangeValidator]],
       checkOutDate: [threeDaysLater, [Validators.required, dateRangeValidator]],
-      rooms: [1, [Validators.required, Validators.min(1)]],
+      // rooms: [1, [Validators.required, Validators.min(1)]],
       people: [2, [Validators.required, Validators.min(1)]],
     });
   }
@@ -95,13 +95,12 @@ export class SearchComponent implements OnInit {
     }
   }
   onSearch(): void {
-    const { checkInDate, checkOutDate, rooms, people } = this.searchForm.value;
+    const { checkInDate, checkOutDate, people } = this.searchForm.value;
 
     if (checkInDate && checkOutDate) {
       this.searchService.searchRooms(
         new Date(checkInDate),
         new Date(checkOutDate),
-        rooms,
         people
       );
     }

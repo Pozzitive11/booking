@@ -12,7 +12,7 @@ export class BookingService {
   hotelRooms = computed(() => this._hotelRooms());
   filteredRooms = computed(() => this._filteredRooms());
 
-  filterRooms(selectedDates: string[], rooms: number, people: number): void {
+  filterRooms(selectedDates: string[], people: number): void {
     const filtered = this._hotelRooms().filter((room) => {
       const hasAvailability = selectedDates.every((date) =>
         room.availableDates.includes(date)
