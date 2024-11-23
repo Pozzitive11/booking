@@ -2,6 +2,7 @@ import { Component, inject, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { NavigationComponent } from './components/navigation/navigation.component';
 import { AuthService } from './auth/auth.service';
+import { BookingService } from './services/booking.service';
 @Component({
   selector: 'app-root',
   standalone: true,
@@ -11,6 +12,7 @@ import { AuthService } from './auth/auth.service';
 })
 export class AppComponent implements OnInit {
   authService = inject(AuthService);
+  protected bookingService = inject(BookingService);
 
   ngOnInit(): void {
     this.authService.user$.subscribe((user: any) => {
@@ -24,5 +26,6 @@ export class AppComponent implements OnInit {
         this.authService.currentUser.set(null);
       }
     });
+    this.bookingService.getRooms();
   }
 }

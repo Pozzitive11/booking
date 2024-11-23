@@ -16,10 +16,6 @@ import { BookingService } from '../../services/booking.service';
   standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class RoomCardsListComponent implements OnInit {
+export class RoomCardsListComponent {
   protected bookingService = inject(BookingService);
-
-  ngOnInit(): void {
-    this.bookingService.getRooms();
-  }
 }

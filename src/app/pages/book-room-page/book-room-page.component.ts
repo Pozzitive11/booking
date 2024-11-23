@@ -15,6 +15,9 @@ import { RoomDetailsComponent } from '../../components/room-details/room-details
 import { RouterModule } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
 import { Room } from '../../models/room.model';
+import { RoomsFirebaseService } from '../../services/rooms-firebase.service';
+import { SearchService } from '../../services/search.service';
+import { UtilsFunctions } from '../../utils/utils.functions';
 @Component({
   selector: 'app-book-room-page',
   imports: [
@@ -29,9 +32,10 @@ import { Room } from '../../models/room.model';
   standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class BookRoomPageComponent {
+export class BookRoomPageComponent implements OnInit {
   private bookingService = inject(BookingService);
-  // protected searchService = inject(SearchService);
+  private roomsFirebaseService = inject(RoomsFirebaseService);
+  private searchService = inject(SearchService);
   roomId = input.required<number>();
   checkInDate = input.required<string>();
   checkOutDate = input.required<string>();
@@ -39,10 +43,18 @@ export class BookRoomPageComponent {
   selectedDatesRangeCount = input.required<number>();
 
   bookingForm: FormGroup;
-  room = computed<Room>(() => this.bookingService.getRoomById(+this.roomId()));
+  room = computed<Room>(() => this.bookingService.getRoomById(this.roomId()));
+
+  ngOnInit(): void {
+    this.searchService.updateSelectedDates(
+      UtilsFunctions.convertStringToDate(this.checkInDate()),
+      UtilsFunctions.convertStringToDate(this.checkOutDate())
+    );
+  }
 
   onSubmit(form: FormGroup): void {
-    console.log('Form submitted:', form.value);
-    alert('Бронювання підтверджено!');
+    this.roomsFirebaseService
+      .bookRoom(this.roomId(), this.searchService.selectedDatesRange())
+      .subscribe();
   }
 }

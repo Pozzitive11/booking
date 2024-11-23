@@ -27,13 +27,13 @@ export class BookingService {
         room.availableDates.includes(date)
       );
 
-      return room.maxGuests === people && room.availability && hasAvailability;
+      return room.maxGuests === people && room.availability;
     });
 
     this._filteredRooms.set(filtered);
   }
 
   getRoomById(id: number): Room {
-    return this._hotelRooms().find((room) => room.id === id);
+    return this._filteredRooms().find((room) => room.id === id);
   }
 }

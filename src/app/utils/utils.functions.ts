@@ -41,4 +41,9 @@ export class UtilsFunctions {
       return 'людей';
     }
   }
+
+  static convertStringToDate(dateString: string): Date {
+    const [year, month, day] = dateString.split('-').map(Number);
+    return new Date(year, month - 1, day); // У JavaScript місяці починаються з 0 (січень = 0)
+  }
 }
