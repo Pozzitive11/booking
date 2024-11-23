@@ -1,4 +1,11 @@
-import { Component, computed, inject, input, OnInit } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  computed,
+  inject,
+  input,
+  OnInit,
+} from '@angular/core';
 import { FormGroup } from '@angular/forms';
 
 import { CommonModule } from '@angular/common';
@@ -20,6 +27,7 @@ import { Room } from '../../models/room.model';
   templateUrl: './book-room-page.component.html',
   styleUrl: './book-room-page.component.css',
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class BookRoomPageComponent {
   private bookingService = inject(BookingService);

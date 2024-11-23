@@ -1,0 +1,64 @@
+<form
+  [formGroup]="registerForm"
+  (ngSubmit)="onSubmit()"
+  class="max-w-md mx-auto p-6 space-y-4 bg-white rounded-lg shadow-lg"
+>
+  <!-- Email -->
+  <mat-form-field appearance="fill" class="w-full">
+    <mat-label>Email</mat-label>
+    <input
+      matInput
+      formControlName="email"
+      type="email"
+      placeholder="Введіть ваш email"
+    />
+    <mat-error *ngIf="registerForm.get('email')?.hasError('required')"
+      >Email є обов'язковим.</mat-error
+    >
+    <mat-error *ngIf="registerForm.get('email')?.hasError('email')"
+      >Некоректний формат email.</mat-error
+    >
+  </mat-form-field>
+
+  <!-- Username -->
+  <mat-form-field appearance="fill" class="w-full">
+    <mat-label>Username</mat-label>
+    <input
+      matInput
+      formControlName="username"
+      type="text"
+      placeholder="Введіть ваше ім'я користувача"
+    />
+    <mat-error *ngIf="registerForm.get('username')?.hasError('required')"
+      >Ім'я користувача є обов'язковим.</mat-error
+    >
+  </mat-form-field>
+
+  <!-- Password -->
+  <mat-form-field appearance="fill" class="w-full">
+    <mat-label>Password</mat-label>
+    <input
+      matInput
+      formControlName="password"
+      type="password"
+      placeholder="Введіть ваш пароль"
+    />
+    <mat-error *ngIf="registerForm.get('password')?.hasError('required')"
+      >Пароль є обов'язковим.</mat-error
+    >
+    <mat-error *ngIf="registerForm.get('password')?.hasError('minlength')">
+      Пароль повинен містити мінімум 6 символів.
+    </mat-error>
+  </mat-form-field>
+
+  <!-- Submit Button -->
+  <button
+    mat-raised-button
+    color="primary"
+    type="submit"
+    [disabled]="registerForm.invalid"
+    class="w-full"
+  >
+    Register
+  </button>
+</form>

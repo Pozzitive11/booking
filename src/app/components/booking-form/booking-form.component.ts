@@ -1,5 +1,11 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, OnInit, output } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  inject,
+  OnInit,
+  output,
+} from '@angular/core';
 import {
   ReactiveFormsModule,
   FormGroup,
@@ -31,6 +37,7 @@ import { MatRadioModule } from '@angular/material/radio';
   templateUrl: './booking-form.component.html',
   styleUrl: './booking-form.component.css',
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class BookingFormComponent implements OnInit {
   private fb = inject(FormBuilder);

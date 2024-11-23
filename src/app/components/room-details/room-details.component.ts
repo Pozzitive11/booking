@@ -1,4 +1,10 @@
-import { Component, computed, inject, input } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  computed,
+  inject,
+  input,
+} from '@angular/core';
 import { MatIcon } from '@angular/material/icon';
 import { CommonModule } from '@angular/common';
 import { RoomDetailsService } from '../../services/room-details.service';
@@ -12,6 +18,7 @@ import { Room } from '../../models/room.model';
   templateUrl: './room-details.component.html',
   styleUrl: './room-details.component.css',
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class RoomDetailsComponent {
   protected roomDetailsService = inject(RoomDetailsService);

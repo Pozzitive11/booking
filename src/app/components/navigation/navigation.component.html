@@ -1,12 +1,30 @@
-<nav class="bg-blue-600 p-4 mb-6">
-  <ul class="flex justify-center">
-    <li>
-      <a
-        routerLink="/"
-        class="text-white font-semibold hover:underline"
-        routerLinkActive="underline"
-        >Головна сторінка</a
-      >
-    </li>
-  </ul>
+<nav class="flex justify-between items-center bg-blue-600 text-white p-4 mb-10">
+  <div class="text-lg font-bold">
+    <a routerLink="/">My Hotel</a>
+  </div>
+  <div>
+    @if(authService.currentUser() == null){
+    <a
+      routerLink="/login"
+      class="px-4 py-2 bg-green-500 hover:bg-green-600 text-white rounded mr-2"
+    >
+      Увійти
+    </a>
+    <a
+      routerLink="/register"
+      class="px-4 py-2 bg-gray-500 hover:bg-gray-600 text-white rounded"
+    >
+      Зареєструватися
+    </a>
+    }
+    @if(authService.currentUser()) {
+    <span class="mr-4">Вітаю, {{ authService.currentUser().username }}</span>
+    <button
+      (click)="logout()"
+      class="px-4 py-2 bg-red-500 hover:bg-red-600 text-white rounded"
+    >
+      Вийти
+    </button>
+    }
+  </div>
 </nav>

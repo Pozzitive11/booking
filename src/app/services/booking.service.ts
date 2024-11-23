@@ -1,16 +1,25 @@
-import { computed, Injectable, signal } from '@angular/core';
+import { computed, inject, Injectable, signal } from '@angular/core';
 import { Room } from '../models/room.model';
 import { hotelRooms } from '../DB';
+import { RoomsFirebaseService } from './rooms-firebase.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class BookingService {
-  private _hotelRooms = signal<Room[]>(hotelRooms);
+  private roomsFirebaseService = inject(RoomsFirebaseService);
+
+  private _hotelRooms = signal<Room[]>([]);
   private _filteredRooms = signal<Room[]>(this._hotelRooms());
 
   hotelRooms = computed(() => this._hotelRooms());
   filteredRooms = computed(() => this._filteredRooms());
+
+  getRooms() {
+    this.roomsFirebaseService.getRooms().subscribe((rooms) => {
+      this._hotelRooms.set(rooms);
+    });
+  }
 
   filterRooms(selectedDates: string[], people: number): void {
     const filtered = this._hotelRooms().filter((room) => {

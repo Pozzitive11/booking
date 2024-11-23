@@ -1,6 +1,11 @@
 import { SearchService } from './../../services/search.service';
 import { CommonModule } from '@angular/common';
-import { Component, inject, input } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  inject,
+  input,
+} from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { Room } from '../../models/room.model';
 import { MatButtonModule } from '@angular/material/button';
@@ -12,6 +17,7 @@ import { Router } from '@angular/router';
   templateUrl: './room-card.component.html',
   styleUrl: './room-card.component.css',
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class RoomCardComponent {
   private searchService = inject(SearchService);

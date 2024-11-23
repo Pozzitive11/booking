@@ -1,4 +1,10 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  inject,
+  OnInit,
+  signal,
+} from '@angular/core';
 import {
   ReactiveFormsModule,
   FormGroup,
@@ -36,6 +42,7 @@ import { SearchService } from '../../services/search.service';
   templateUrl: './search.component.html',
   styleUrl: './search.component.css',
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SearchComponent implements OnInit {
   private fb = inject(FormBuilder);
