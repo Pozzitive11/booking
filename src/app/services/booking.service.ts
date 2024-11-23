@@ -18,7 +18,7 @@ export class BookingService {
         room.availableDates.includes(date)
       );
 
-      return room.maxGuests >= people && room.availability && hasAvailability;
+      return room.maxGuests === people && room.availability && hasAvailability;
     });
 
     this._filteredRooms.set(filtered);

@@ -31,11 +31,11 @@
     </div>
 
     <!-- Amenities -->
-    <div class="flex items-center space-x-4 text-sm text-gray-700">
+    <ul class="flex flex-wrap items-center gap-2 text-sm text-gray-700 list-none">
       @for (amenity of room().amenities; track $index) {
-      <span>{{ amenity }}</span>
+      <li >{{ amenity }}</li>
       }
-    </div>
+    </ul>
   </div>
 
   <!-- Booking Summary Section -->

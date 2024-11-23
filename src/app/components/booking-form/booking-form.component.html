@@ -4,7 +4,10 @@
   <!-- Додали formGroup до обгортки -->
   <form [formGroup]="bookingForm" (ngSubmit)="submit()" class="space-y-4">
     <!-- Перемикач для вибору -->
-    <mat-radio-group [formControl]="bookingTypeControl" class="flex gap-4 mb-6">
+    <mat-radio-group
+      [formControl]="bookingTypeControl"
+      class="flex items-center justify-center flex-col md:flex-row gap-4 mb-6"
+    >
       <mat-radio-button value="self">Бронюю самостійно</mat-radio-button>
       <mat-radio-button value="agency">Через турагентство</mat-radio-button>
     </mat-radio-group>
@@ -53,8 +56,10 @@
       <mat-label>Ел. пошта</mat-label>
       <input
         matInput
-        [formControl]="emailControl"
         placeholder="Введіть вашу електронну пошту"
+        [formControl]="emailControl"
+        required
+        type="email"
       />
       <mat-error *ngIf="bookingForm.get('email')?.hasError('required')">
         Ел. пошта є обов'язковою.
@@ -70,6 +75,7 @@
         matInput
         [formControl]="phoneControl"
         placeholder="Введіть ваш номер телефону"
+        type="number"
       />
       <mat-error *ngIf="bookingForm.get('phone')?.hasError('required')">
         Номер телефону є обов'язковим.

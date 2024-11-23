@@ -1,10 +1,10 @@
 import { Component, computed, inject, input } from '@angular/core';
-import { Room } from '../../models/room.model';
 import { MatIcon } from '@angular/material/icon';
 import { CommonModule } from '@angular/common';
 import { RoomDetailsService } from '../../services/room-details.service';
 import { SearchService } from '../../services/search.service';
 import { UtilsFunctions } from '../../utils/utils.functions';
+import { Room } from '../../models/room.model';
 
 @Component({
   selector: 'app-room-details',

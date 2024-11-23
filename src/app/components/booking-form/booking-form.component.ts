@@ -68,14 +68,14 @@ export class BookingFormComponent implements OnInit {
   }
   initializeForm(): void {
     this.bookingForm = this.fb.group({
-      bookingType: ['self', Validators.required], // Перемикач варіанту
+      bookingType: ['self', Validators.required],
       fullName: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
       phone: ['', Validators.required],
       notes: [''],
       agencyName: [''],
       agentName: [''],
-      mealOption: ['breakfast-lunch'], // Харчування
+      mealOption: ['breakfast-lunch'],
     });
   }
 
