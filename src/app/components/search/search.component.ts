@@ -74,15 +74,10 @@ export class SearchComponent implements OnInit {
   }
 
   initializeForm() {
-    const today = new Date();
-    const threeDaysLater = new Date();
-    threeDaysLater.setDate(today.getDate() + 2);
-
     this.searchForm = this.fb.group({
-      checkInDate: [today, [Validators.required, dateRangeValidator]],
-      checkOutDate: [threeDaysLater, [Validators.required, dateRangeValidator]],
-      // rooms: [1, [Validators.required, Validators.min(1)]],
-      people: [2, [Validators.required, Validators.min(1)]],
+      checkInDate: [null, [Validators.required, dateRangeValidator]],
+      checkOutDate: [null, [Validators.required, dateRangeValidator]],
+      people: [1, [Validators.required, Validators.min(1)]],
     });
   }
 

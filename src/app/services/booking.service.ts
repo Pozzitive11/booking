@@ -1,6 +1,5 @@
 import { computed, inject, Injectable, signal } from '@angular/core';
 import { Room } from '../models/room.model';
-import { hotelRooms } from '../DB';
 import { RoomsFirebaseService } from './rooms-firebase.service';
 
 @Injectable({
@@ -10,7 +9,7 @@ export class BookingService {
   private roomsFirebaseService = inject(RoomsFirebaseService);
 
   private _hotelRooms = signal<Room[]>([]);
-  private _filteredRooms = signal<Room[]>(this._hotelRooms());
+  private _filteredRooms = signal<Room[]>([]);
 
   hotelRooms = computed(() => this._hotelRooms());
   filteredRooms = computed(() => this._filteredRooms());
@@ -18,6 +17,7 @@ export class BookingService {
   getRooms() {
     this.roomsFirebaseService.getRooms().subscribe((rooms) => {
       this._hotelRooms.set(rooms);
+      this._filteredRooms.set(rooms);
     });
   }
 
