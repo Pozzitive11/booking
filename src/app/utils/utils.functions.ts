@@ -33,4 +33,12 @@ export class UtilsFunctions {
 
     return formatter.format(date); // Форматуємо дату
   }
+
+  static formatPeopleWord(amountOfPeople: number): string {
+    if (amountOfPeople === 1) {
+      return 'людини';
+    } else {
+      return 'людей';
+    }
+  }
 }

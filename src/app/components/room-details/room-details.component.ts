@@ -32,4 +32,8 @@ export class RoomDetailsComponent {
   });
 
   totalPrice = computed(() => this.room().pricePerNight * this.daysCount());
+
+  formattedPeopleWord = computed(() => {
+    return UtilsFunctions.formatPeopleWord(+this.amountOfPeople());
+  });
 }

@@ -63,15 +63,19 @@ export class SearchComponent implements OnInit {
 
   ngOnInit() {
     this.initializeForm();
+    this.onSearch();
   }
 
   initializeForm() {
+    const today = new Date();
+    const threeDaysLater = new Date();
+    threeDaysLater.setDate(today.getDate() + 2);
+
     this.searchForm = this.fb.group({
-      checkInDate: [null, [Validators.required, dateRangeValidator]],
-      checkOutDate: [null, [Validators.required, dateRangeValidator]],
+      checkInDate: [today, [Validators.required, dateRangeValidator]],
+      checkOutDate: [threeDaysLater, [Validators.required, dateRangeValidator]],
       rooms: [1, [Validators.required, Validators.min(1)]],
-      people: [1, [Validators.required, Validators.min(1)]],
-      // bookingType: ['self', Validators.required],
+      people: [2, [Validators.required, Validators.min(1)]],
     });
   }
 

@@ -32,8 +32,9 @@
 
     <!-- Amenities -->
     <div class="flex items-center space-x-4 text-sm text-gray-700">
-      <span>Безкоштовний Wi-Fi</span>
-      <span>Трансфер з/до аеропорту</span>
+      @for (amenity of room().amenities; track $index) {
+      <span>{{ amenity }}</span>
+      }
     </div>
   </div>
 
@@ -56,20 +57,27 @@
     <!-- Stay Duration -->
     <div class="mt-4">
       <div class="text-sm text-gray-700">
-        Загальний термін перебування: <span class="font-semibold">{{daysCount()}} ночей</span>
+        Загальний термін перебування:
+        <span class="font-semibold">{{ daysCount() }} ночей</span>
       </div>
     </div>
 
     <!-- Room and Guests -->
     <div class="mt-4 border-t pt-4 text-sm text-gray-700">
       <div>
-        Ви вибрали: <span class="font-semibold">номер для 2 людей</span>
+        Ви вибрали:
+        <span class="font-semibold"
+          >номер для {{ amountOfPeople() }} {{ formattedPeopleWord() }}</span
+        >
       </div>
     </div>
   </section>
 
   <!-- Total Price Section -->
   <section class="mt-6 bg-blue-50 border border-blue-500 rounded-lg p-4 shadow">
+    <div class="text-sm text-green-600">
+      Початкова ціна за ніч: ₴{{ room().pricePerNight }}
+    </div>
     <div class="text-lg font-semibold text-blue-800">
       Кінцева ціна: ₴{{ totalPrice() }}
     </div>
