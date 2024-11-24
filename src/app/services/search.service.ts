@@ -32,4 +32,8 @@ export class SearchService {
     this._amountOfPeople.set(people);
     this.bookingService.filterRooms(this.selectedDatesRange(), people);
   }
+
+  clearSelectedDates(): void {
+    this._selectedDatesRange.set([]);
+  }
 }

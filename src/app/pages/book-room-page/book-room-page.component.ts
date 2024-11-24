@@ -12,12 +12,14 @@ import { CommonModule } from '@angular/common';
 import { BookingService } from '../../services/booking.service';
 import { BookingFormComponent } from '../../components/booking-form/booking-form.component';
 import { RoomDetailsComponent } from '../../components/room-details/room-details.component';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
 import { Room } from '../../models/room.model';
 import { RoomsFirebaseService } from '../../services/rooms-firebase.service';
 import { SearchService } from '../../services/search.service';
 import { UtilsFunctions } from '../../utils/utils.functions';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { ConfirmDialogComponent } from '../../components/confirm-dialog/confirm-dialog.component';
 @Component({
   selector: 'app-book-room-page',
   imports: [
@@ -26,6 +28,8 @@ import { UtilsFunctions } from '../../utils/utils.functions';
     RoomDetailsComponent,
     RouterModule,
     MatButtonModule,
+    MatDialogModule,
+    ConfirmDialogComponent,
   ],
   templateUrl: './book-room-page.component.html',
   styleUrl: './book-room-page.component.css',
@@ -41,7 +45,7 @@ export class BookRoomPageComponent implements OnInit {
   checkOutDate = input.required<string>();
   amountOfPeople = input.required<number>();
   selectedDatesRangeCount = input.required<number>();
-
+  private dialog = inject(MatDialog);
   bookingForm: FormGroup;
   room = computed<Room>(() => this.bookingService.getRoomById(this.roomId()));
 
@@ -59,6 +63,15 @@ export class BookRoomPageComponent implements OnInit {
     );
     this.roomsFirebaseService
       .bookRoom(this.roomId(), this.searchService.selectedDatesRange())
-      .subscribe();
+      .subscribe(() => {
+        this.openDialog();
+        this.searchService.clearSelectedDates();
+      });
+  }
+
+  openDialog(): void {
+    this.dialog.open(ConfirmDialogComponent, {
+      width: '400px',
+    });
   }
 }

@@ -60,17 +60,44 @@ export class RoomsFirebaseService {
           currentUser.id
         );
 
-        // Перевіряємо, чи існує документ
         return from(getDoc(bookedRoomDocRef)).pipe(
           switchMap((docSnapshot) => {
             if (docSnapshot.exists()) {
-              // Якщо документ існує, оновлюємо поле `rooms`
-              return updateDoc(bookedRoomDocRef, {
-                rooms: arrayUnion({
-                  roomId,
-                  roomData,
-                }),
-              });
+              // Якщо документ існує
+              const existingData = docSnapshot.data() as { rooms: any[] };
+              const existingRoom = existingData.rooms.find(
+                (room) => room.roomId === roomId
+              );
+
+              if (existingRoom) {
+                // Якщо roomId вже є, додаємо нові дати до `bookedDates`
+                const updatedRooms = existingData.rooms.map((room) =>
+                  room.roomId === roomId
+                    ? {
+                        ...room,
+                        roomData: {
+                          ...room.roomData,
+                          bookedDates: Array.from(
+                            new Set([
+                              ...(room.roomData.bookedDates || []),
+                              ...selectedDates,
+                            ])
+                          ), // Унікальні дати
+                        },
+                      }
+                    : room
+                );
+
+                return updateDoc(bookedRoomDocRef, { rooms: updatedRooms });
+              } else {
+                // Якщо roomId немає, додаємо новий об'єкт у масив rooms
+                return updateDoc(bookedRoomDocRef, {
+                  rooms: arrayUnion({
+                    roomId,
+                    roomData,
+                  }),
+                });
+              }
             } else {
               // Якщо документа немає, створюємо новий
               return setDoc(bookedRoomDocRef, {
@@ -87,6 +114,7 @@ export class RoomsFirebaseService {
         );
       })
     );
+
     return forkJoin([updateRoom$, addBooking$]).pipe(map(() => void 0));
   }
 

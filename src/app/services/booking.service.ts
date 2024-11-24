@@ -68,6 +68,12 @@ export class BookingService {
     );
   }
 
+  isRoomAvailable(roomId: string, selectedDates: string[]): boolean {
+    return !this._filteredRooms()
+      .find((room) => room.id === roomId)
+      ?.bookedDates.some((date) => selectedDates.includes(date));
+  }
+
   getRoomById(id: string): Room {
     return this._filteredRooms().find((room) => room.id === id);
   }
