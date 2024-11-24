@@ -12,7 +12,7 @@ import { CommonModule } from '@angular/common';
 import { BookingService } from '../../services/booking.service';
 import { BookingFormComponent } from '../../components/booking-form/booking-form.component';
 import { RoomDetailsComponent } from '../../components/room-details/room-details.component';
-import { Router, RouterModule } from '@angular/router';
+import { RouterModule } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
 import { Room } from '../../models/room.model';
 import { RoomsFirebaseService } from '../../services/rooms-firebase.service';
@@ -72,6 +72,7 @@ export class BookRoomPageComponent implements OnInit {
   openDialog(): void {
     this.dialog.open(ConfirmDialogComponent, {
       width: '400px',
+      disableClose: true,
     });
   }
 }

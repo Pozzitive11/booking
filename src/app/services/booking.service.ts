@@ -36,8 +36,6 @@ export class BookingService {
         )
       )
       .subscribe((filteredRooms) => {
-        console.log(filteredRooms[0]);
-
         this._userBookedRooms.set(filteredRooms[0]);
       });
   }
@@ -46,9 +44,11 @@ export class BookingService {
       const hasConflict = selectedDates.some((date) =>
         room.bookedDates.includes(date)
       );
+      console.log(hasConflict);
 
-      return room.maxGuests >= people && !hasConflict;
+      return room.maxGuests === people && !hasConflict;
     });
+    console.log(filtered);
 
     this._filteredRooms.set(filtered);
   }

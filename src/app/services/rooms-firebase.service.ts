@@ -1,6 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import {
   addDoc,
+  arrayRemove,
   arrayUnion,
   collection,
   collectionData,
@@ -14,6 +15,7 @@ import {
 import { forkJoin, from, map, Observable, switchMap, take } from 'rxjs';
 import { Room, UserRoom } from '../models/room.model';
 import { AuthService } from '../auth/auth.service';
+import { SearchService } from './search.service';
 
 @Injectable({
   providedIn: 'root',
@@ -120,5 +122,61 @@ export class RoomsFirebaseService {
 
   getRoomsByUserId(): Observable<UserRoom[]> {
     return collectionData(this.bookedRoomsCollection, { idField: 'id' });
+  }
+
+  deleteBooking(roomId: string, selectedDates: string[]): Observable<void> {
+    const currentUser = this.authService.currentUser();
+    const bookedRoomDocRef = doc(this.firestore, 'bookedRooms', currentUser.id);
+    const hotelRoomDocRef = doc(this.firestore, 'hotelRooms', roomId);
+
+    return from(getDoc(hotelRoomDocRef)).pipe(
+      switchMap((docSnapshot) => {
+        if (docSnapshot.exists()) {
+          const bookedDates: string[] =
+            docSnapshot.data()?.['bookedDates'] || [];
+
+          // Фільтруємо масив, видаляючи обрані дати
+          const updatedBookedDates = bookedDates.filter((date) =>
+            selectedDates.includes(date)
+          );
+
+          console.log('Updated bookedDates:', updatedBookedDates);
+
+          // Оновлюємо масив у Firestore
+          const updateHotelRoomDates$ = updateDoc(hotelRoomDocRef, {
+            bookedDates: updatedBookedDates,
+          });
+
+          return updateHotelRoomDates$;
+        } else {
+          throw new Error('Room not found in hotelRooms collection.');
+        }
+      }),
+      switchMap(() =>
+        from(getDoc(bookedRoomDocRef)).pipe(
+          switchMap((docSnapshot) => {
+            if (docSnapshot.exists()) {
+              const rooms = docSnapshot.data()?.['rooms'] || [];
+              const roomToRemove = rooms.find(
+                (room: any) => room.roomId === roomId
+              );
+
+              if (roomToRemove) {
+                const updateUserRooms$ = updateDoc(bookedRoomDocRef, {
+                  rooms: arrayRemove(roomToRemove),
+                });
+
+                return updateUserRooms$;
+              } else {
+                throw new Error('Room not found in the booked rooms list.');
+              }
+            } else {
+              throw new Error('User bookings not found.');
+            }
+          })
+        )
+      ),
+      map(() => void 0)
+    );
   }
 }
