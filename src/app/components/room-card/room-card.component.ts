@@ -5,11 +5,13 @@ import {
   Component,
   inject,
   input,
+  signal,
 } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { Room } from '../../models/room.model';
 import { MatButtonModule } from '@angular/material/button';
 import { Router } from '@angular/router';
+import { BookingService } from '../../services/booking.service';
 
 @Component({
   selector: 'app-room-card',
@@ -21,8 +23,11 @@ import { Router } from '@angular/router';
 })
 export class RoomCardComponent {
   protected searchService = inject(SearchService);
+  protected bookingService = inject(BookingService);
   private router = inject(Router);
   room = input.required<Room>();
+
+  errorMessage = signal<string | null>(null);
 
   rentRoom(): void {
     const url = this.router.createUrlTree(['/book-room', this.room().id], {
