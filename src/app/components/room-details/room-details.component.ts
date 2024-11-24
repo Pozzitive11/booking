@@ -11,10 +11,11 @@ import { RoomDetailsService } from '../../services/room-details.service';
 import { SearchService } from '../../services/search.service';
 import { UtilsFunctions } from '../../utils/utils.functions';
 import { Room } from '../../models/room.model';
+import { CustomDatePipe } from '../../pipes/custom-date.pipe';
 
 @Component({
   selector: 'app-room-details',
-  imports: [MatIcon, CommonModule],
+  imports: [MatIcon, CommonModule, CustomDatePipe],
   templateUrl: './room-details.component.html',
   styleUrl: './room-details.component.css',
   standalone: true,
@@ -29,14 +30,6 @@ export class RoomDetailsComponent {
   checkInDate = input.required<string>();
   checkOutDate = input.required<string>();
   amountOfPeople = input.required<number>();
-
-  formattedCheckInDate = computed(() => {
-    return UtilsFunctions.formatDateToUkrainian(this.checkInDate());
-  });
-
-  formattedCheckOutDate = computed(() => {
-    return UtilsFunctions.formatDateToUkrainian(this.checkOutDate());
-  });
 
   totalPrice = computed(() => this.room().pricePerNight * this.daysCount());
 

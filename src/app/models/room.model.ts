@@ -14,7 +14,10 @@ export interface Room {
 
 export interface UserRoom {
   id: string;
-  roomId: number;
-  selectedDates: string[];
-  userId: string;
+  rooms: BookedRoom[];
+}
+
+interface BookedRoom extends Room {
+  roomData: Room;
+  roomId: string;
 }

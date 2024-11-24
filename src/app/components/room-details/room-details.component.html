@@ -43,11 +43,11 @@
     <div class="grid grid-cols-2 gap-4 text-sm text-gray-700">
       <div>
         <div class="font-semibold">Реєстрація заїзду</div>
-        <div>{{ formattedCheckInDate() }}</div>
+        <div>{{ checkInDate() | customDate  }}</div>
       </div>
       <div>
         <div class="font-semibold">Реєстрація виїзду</div>
-        <div>{{ formattedCheckOutDate() }}</div>
+        <div>{{ checkOutDate() | customDate }}</div>
       </div>
     </div>
 

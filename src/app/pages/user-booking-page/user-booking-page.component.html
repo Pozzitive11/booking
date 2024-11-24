@@ -1,0 +1,58 @@
+<div class="container mx-auto p-6">
+  <h1 class="text-2xl font-bold text-blue-700 mb-6">Ваші заброньовані номери</h1>
+
+  <!-- Список номерів -->
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+    <div
+      *ngFor="let room of bookingService.userBookedRooms()?.rooms"
+      class="card border rounded-lg shadow-lg p-6 bg-white"
+    >
+      <!-- Зображення -->
+      <div class="relative">
+        <img
+          [src]="'assets/images/' + room?.roomData.image"
+          alt="{{ room?.roomData.name }}"
+          class="w-full h-48 object-cover rounded-lg"
+        />
+      </div>
+
+      <!-- Назва, опис і обрані дати -->
+      <div>
+        <h2 class="text-xl font-bold mt-4 text-gray-800">{{ room?.roomData.name }}</h2>
+        <p class="text-gray-600 text-sm mt-2">{{ room?.roomData.description }}</p>
+        <div class="text-sm text-blue-600 mt-4">
+          <span class="font-semibold">Обрані дати:</span>
+          <span
+            *ngFor="let date of room?.roomData.bookedDates; let last = last"
+            class="text-gray-800"
+          >
+            {{ date | customDate }}<span *ngIf="!last">,</span>
+          </span>
+        </div>
+      </div>
+
+      <!-- Ціна і інформація -->
+      <div>
+        <div class="mt-4 flex items-center">
+          <span class="text-green-600 font-bold text-xl">₴{{ room?.roomData.pricePerNight }}</span>
+          <span class="text-gray-500 text-sm ml-2">/ ніч</span>
+        </div>
+
+        <div class="text-sm text-gray-700 mt-2 flex items-center gap-2">
+          <mat-icon color="primary">group</mat-icon>
+          <span>Максимальна кількість гостей: <b>{{ room?.roomData.maxGuests }}</b></span>
+        </div>
+
+        <div class="text-sm text-gray-700 mt-2">
+          <span class="font-semibold">Зручності:</span>
+          <span
+            *ngFor="let amenity of room?.roomData.amenities; let last = last"
+            class="text-gray-600"
+          >
+            {{ amenity }}<span *ngIf="!last">,</span>
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

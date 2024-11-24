@@ -1,30 +1,46 @@
-<nav class="flex justify-between items-center bg-blue-600 text-white p-4 mb-10">
-  <div>
-    @if(authService.currentUser() == null){
-    <a
-      routerLink="/login"
-      class="px-4 py-2 bg-green-500 hover:bg-green-600 text-white rounded mr-2"
-    >
-      Увійти
-    </a>
-    <a
-      routerLink="/register"
-      class="px-4 py-2 bg-gray-500 hover:bg-gray-600 text-white rounded"
-    >
-      Зареєструватися
-    </a>
-    } @if(authService.currentUser()) {
-    <div class="text-lg font-bold">
-      <a routerLink="/">My Hotel</a>
-      <a routerLink="/user-booking">Мої бронювання</a>
+<nav class="bg-blue-700 text-white p-4 shadow-lg mb-5">
+  <div class=" ">
+    <!-- Навігація -->
+    <div class="flex items-center space-x-6">
+      <!-- Якщо користувач не увійшов -->
+      @if(!authService.currentUser()){
+      <div class="flex items-center gap-4 ml-auto">
+        <a
+          routerLink="/login"
+          class="px-4 py-2 bg-green-500 hover:bg-green-600 text-white rounded transition"
+        >
+          Увійти
+        </a>
+        <a
+          routerLink="/register"
+          class="px-4 py-2 bg-gray-500 hover:bg-gray-600 text-white rounded transition"
+        >
+          Зареєструватися
+        </a>
+      </div>
+
+      }
+      <!-- Якщо користувач увійшов -->
+      @if(authService.currentUser()){
+      <div class="container flex gap-4 items-center flex-wrap">
+        <div class="text-2xl font-bold">
+          <a routerLink="/" class="hover:text-blue-300">My Hotel</a>
+        </div>
+        <a
+          routerLink="/user-booking"
+          class="text-lg hover:text-blue-300 transition"
+        >
+          Мої бронювання
+        </a>
+        <button
+          (click)="logout()"
+          class="ml-auto px-4 py-2 bg-red-500 hover:bg-red-600 text-white rounded transition"
+        >
+          Вийти
+        </button>
+      </div>
+
+      }
     </div>
-    <span class="mr-4">Вітаю, {{ authService.currentUser().username }}</span>
-    <button
-      (click)="logout()"
-      class="px-4 py-2 bg-red-500 hover:bg-red-600 text-white rounded"
-    >
-      Вийти
-    </button>
-    }
   </div>
 </nav>

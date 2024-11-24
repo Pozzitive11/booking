@@ -14,7 +14,7 @@ export class BookingService {
 
   private _hotelRooms = signal<Room[]>([]);
   private _filteredRooms = signal<Room[]>([]);
-  private _userBookedRooms = signal<UserRoom[]>([]);
+  private _userBookedRooms = signal<UserRoom | undefined>(undefined);
 
   hotelRooms = computed(() => this._hotelRooms());
   filteredRooms = computed(() => this._filteredRooms());
@@ -32,13 +32,13 @@ export class BookingService {
       .getRoomsByUserId()
       .pipe(
         map((rooms) =>
-          rooms.filter(
-            (room) => room.userId === this.authService.currentUser()?.id
-          )
+          rooms.filter((room) => room.id === this.authService.currentUser()?.id)
         )
       )
       .subscribe((filteredRooms) => {
-        this._userBookedRooms.set(filteredRooms);
+        console.log(filteredRooms[0]);
+
+        this._userBookedRooms.set(filteredRooms[0]);
       });
   }
   filterRooms(selectedDates: string[], people: number): void {

@@ -7,6 +7,7 @@ import {
   doc,
   docData,
   Firestore,
+  getDoc,
   setDoc,
   updateDoc,
 } from '@angular/fire/firestore';
@@ -56,15 +57,34 @@ export class RoomsFirebaseService {
         const bookedRoomDocRef = doc(
           this.firestore,
           'bookedRooms',
-          this.authService.currentUser().id
+          currentUser.id
         );
-        return updateDoc(bookedRoomDocRef, {
-          roomId,
-          rooms: arrayUnion({
-            roomData,
-          }),
-          userId: currentUser.id,
-        });
+
+        // Перевіряємо, чи існує документ
+        return from(getDoc(bookedRoomDocRef)).pipe(
+          switchMap((docSnapshot) => {
+            if (docSnapshot.exists()) {
+              // Якщо документ існує, оновлюємо поле `rooms`
+              return updateDoc(bookedRoomDocRef, {
+                rooms: arrayUnion({
+                  roomId,
+                  roomData,
+                }),
+              });
+            } else {
+              // Якщо документа немає, створюємо новий
+              return setDoc(bookedRoomDocRef, {
+                userId: currentUser.id,
+                rooms: [
+                  {
+                    roomId,
+                    roomData,
+                  },
+                ],
+              });
+            }
+          })
+        );
       })
     );
     return forkJoin([updateRoom$, addBooking$]).pipe(map(() => void 0));
