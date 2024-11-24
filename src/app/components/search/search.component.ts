@@ -58,15 +58,10 @@ export class SearchComponent implements OnInit {
   get checkOutDateControl(): FormControl {
     return this.searchForm.get('checkOutDate') as FormControl;
   }
-  // get roomsControl(): FormControl {
-  //   return this.searchForm.get('rooms') as FormControl;
-  // }
+
   get peopleControl(): FormControl {
     return this.searchForm.get('people') as FormControl;
   }
-  // get bookingTypeControl(): FormControl {
-  //   return this.searchForm.get('bookingType') as FormControl;
-  // }
 
   ngOnInit() {
     this.initializeForm();

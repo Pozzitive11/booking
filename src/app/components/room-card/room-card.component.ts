@@ -20,12 +20,12 @@ import { Router } from '@angular/router';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class RoomCardComponent {
-  private searchService = inject(SearchService);
+  protected searchService = inject(SearchService);
   private router = inject(Router);
   room = input.required<Room>();
 
   rentRoom(): void {
-    this.router.navigate(['/book-room', this.room().id], {
+    const url = this.router.createUrlTree(['/book-room', this.room().id], {
       queryParams: {
         checkInDate: this.searchService.selectedCheckInDate(),
         checkOutDate: this.searchService.selectedCheckOutDate(),
@@ -33,5 +33,8 @@ export class RoomCardComponent {
         selectedDatesRangeCount: this.searchService.selectedDatesRangeCount(),
       },
     });
+
+    // Відкриваємо нову вкладку
+    window.open(url.toString(), '_blank');
   }
 }

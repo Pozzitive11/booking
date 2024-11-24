@@ -8,6 +8,13 @@ export interface Room {
   image: string;
   availability: boolean;
   rating: number;
-  availableDates: string[];
+  bookedDates: string[];
   address: string;
+}
+
+export interface UserRoom {
+  id: string;
+  roomId: number;
+  selectedDates: string[];
+  userId: string;
 }

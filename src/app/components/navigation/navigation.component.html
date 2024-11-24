@@ -1,7 +1,4 @@
 <nav class="flex justify-between items-center bg-blue-600 text-white p-4 mb-10">
-  <div class="text-lg font-bold">
-    <a routerLink="/">My Hotel</a>
-  </div>
   <div>
     @if(authService.currentUser() == null){
     <a
@@ -16,8 +13,11 @@
     >
       Зареєструватися
     </a>
-    }
-    @if(authService.currentUser()) {
+    } @if(authService.currentUser()) {
+    <div class="text-lg font-bold">
+      <a routerLink="/">My Hotel</a>
+      <a routerLink="/user-booking">Мої бронювання</a>
+    </div>
     <span class="mr-4">Вітаю, {{ authService.currentUser().username }}</span>
     <button
       (click)="logout()"

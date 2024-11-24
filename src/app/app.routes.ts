@@ -10,7 +10,7 @@ export const routes: Routes = [
       ),
 
     pathMatch: 'full',
-    // canActivate: [authGuard],
+    canActivate: [authGuard],
   },
   {
     path: 'book-room/:roomId',
@@ -18,7 +18,15 @@ export const routes: Routes = [
       import('./pages/book-room-page/book-room-page.component').then(
         (m) => m.BookRoomPageComponent
       ),
-    // canActivate: [authGuard],
+    canActivate: [authGuard],
+  },
+  {
+    path: 'user-booking',
+    loadComponent: () =>
+      import('./pages/user-booking-page/user-booking-page.component').then(
+        (m) => m.UserBookingPageComponent
+      ),
+    canActivate: [authGuard],
   },
   {
     path: 'register',

@@ -1,5 +1,11 @@
 <div class="container grid grid-cols-1 md:grid-cols-2 gap-4">
   @for (room of bookingService.filteredRooms(); track room.id) {
   <app-room-card [room]="room"></app-room-card>
+  } @if (bookingService.filteredRooms().length === 0) {
+  <div class="text-center col-span-full">
+    <p class="text-lg text-gray-500">
+      На жаль, кімнат не знайдено за вашими критеріями.
+    </p>
+  </div>
   }
 </div>

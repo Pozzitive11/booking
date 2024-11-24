@@ -1,4 +1,4 @@
-<div class="card border rounded-lg shadow-lg p-6 bg-white ">
+<div class="card border rounded-lg shadow-lg p-6 bg-white">
   <!-- Зображення -->
   <div class="relative">
     <img
@@ -6,12 +6,12 @@
       alt="{{ room().name }}"
       class="w-full h-64 object-cover rounded-lg"
     />
-    <div
+    <!-- <div
       *ngIf="!room().availability"
       class="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center rounded-lg text-white text-xl font-bold"
     >
       Недоступно
-    </div>
+    </div> -->
   </div>
 
   <h2 class="text-xl font-bold mt-4 text-gray-800">{{ room().name }}</h2>
@@ -42,15 +42,16 @@
     </span>
   </div>
 
+  @if(searchService.selectedDatesRange().length > 0) {
   <div class="mt-6">
     <button
       mat-raised-button
-      [ngStyle]="{ 'background-color': room().availability ? 'primary' : 'warn' }"
-      [disabled]="!room().availability"
       class="w-full"
       (click)="rentRoom()"
     >
-      {{ room().availability ? "Забронювати" : "Недоступно" }}
+      {{ "Забронювати"  }}
     </button>
   </div>
+
+  }
 </div>

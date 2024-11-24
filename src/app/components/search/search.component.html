@@ -66,13 +66,17 @@
         type="number"
         [formControl]="peopleControl"
         readonly
-        class="w-6 text-center"
+        class="w-8 text-center"
       />
-      <button mat-stroked-button class="rounded-button" (click)="increaseValue('people', $event)">
+      <button
+        mat-stroked-button
+        class="rounded-button"
+        (click)="increaseValue('people', $event)"
+        [disabled]="peopleControl.value === 10"
+      >
         <mat-icon class="text-gray-700 button-icon">add</mat-icon>
       </button>
     </div>
-
 
     <!-- Кнопка пошуку -->
     <button
