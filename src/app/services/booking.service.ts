@@ -53,7 +53,22 @@ export class BookingService {
     this._filteredRooms.set(filtered);
   }
 
-  getRoomById(id: number): Room {
+  setBookedDates(roomId: string, selectedDates: string[]): void {
+    this._filteredRooms.set(
+      this._filteredRooms().map((room) => {
+        if (room.id === roomId) {
+          return {
+            ...room,
+            bookedDates: [...room.bookedDates, ...selectedDates],
+          };
+        }
+
+        return room;
+      })
+    );
+  }
+
+  getRoomById(id: string): Room {
     return this._filteredRooms().find((room) => room.id === id);
   }
 }

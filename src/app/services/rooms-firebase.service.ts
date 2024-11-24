@@ -1,6 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import {
   addDoc,
+  arrayUnion,
   collection,
   collectionData,
   doc,
@@ -9,7 +10,7 @@ import {
   setDoc,
   updateDoc,
 } from '@angular/fire/firestore';
-import { forkJoin, from, map, Observable } from 'rxjs';
+import { forkJoin, from, map, Observable, switchMap, take } from 'rxjs';
 import { Room, UserRoom } from '../models/room.model';
 import { AuthService } from '../auth/auth.service';
 
@@ -26,29 +27,47 @@ export class RoomsFirebaseService {
     return collectionData(this.roomsCollection, { idField: 'id' });
   }
 
-  bookRoom(roomId: number, selectedDates: string[]): Observable<[void, void]> {
+  bookRoom(roomId: string, selectedDates: string[]): Observable<[void, void]> {
     const currentUser = this.authService.currentUser();
 
-    // Посилання на колекцію bookedRooms
-    const bookedRoomsCollection = collection(this.firestore, 'bookedRooms');
-
-    // Оновлюємо інформацію про доступні дати у номері
     const updateRoom$ = from(
       updateDoc(doc(this.firestore, 'hotelRooms', roomId.toString()), {
-        availableDates: selectedDates,
-        availability: selectedDates.length === 0, // Якщо дати відсутні, то номер недоступний
+        bookedDates: arrayUnion(...selectedDates),
       })
     );
 
-    // Додаємо новий запис у колекцію bookedRooms
-    const setUserBooking$ = from(
-      addDoc(bookedRoomsCollection, {
-        roomId,
-        selectedDates,
-        userId: currentUser.id,
+    const roomDocRef = doc(this.firestore, 'hotelRooms', roomId);
+    const roomData$ = docData(roomDocRef).pipe(
+      take(1),
+      map((data) => {
+        if (typeof data !== 'object' || data === null) {
+          throw new Error('roomData is not a valid object');
+        }
+
+        return {
+          ...data,
+          bookedDates: selectedDates,
+        };
       })
     );
-    return forkJoin([updateRoom$, setUserBooking$]).pipe(map(() => void 0));
+
+    const addBooking$ = roomData$.pipe(
+      switchMap((roomData) => {
+        const bookedRoomDocRef = doc(
+          this.firestore,
+          'bookedRooms',
+          this.authService.currentUser().id
+        );
+        return updateDoc(bookedRoomDocRef, {
+          roomId,
+          rooms: arrayUnion({
+            roomData,
+          }),
+          userId: currentUser.id,
+        });
+      })
+    );
+    return forkJoin([updateRoom$, addBooking$]).pipe(map(() => void 0));
   }
 
   getRoomsByUserId(): Observable<UserRoom[]> {

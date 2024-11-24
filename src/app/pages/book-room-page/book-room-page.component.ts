@@ -36,7 +36,7 @@ export class BookRoomPageComponent implements OnInit {
   private bookingService = inject(BookingService);
   private roomsFirebaseService = inject(RoomsFirebaseService);
   private searchService = inject(SearchService);
-  roomId = input.required<number>();
+  roomId = input.required<string>();
   checkInDate = input.required<string>();
   checkOutDate = input.required<string>();
   amountOfPeople = input.required<number>();
@@ -53,6 +53,10 @@ export class BookRoomPageComponent implements OnInit {
   }
 
   onSubmit(form: FormGroup): void {
+    this.bookingService.setBookedDates(
+      this.roomId(),
+      this.searchService.selectedDatesRange()
+    );
     this.roomsFirebaseService
       .bookRoom(this.roomId(), this.searchService.selectedDatesRange())
       .subscribe();
